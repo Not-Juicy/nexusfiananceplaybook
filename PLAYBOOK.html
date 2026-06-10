@@ -743,7 +743,6 @@
   <a href="#gcp-migration">12. GCP Migration</a>
   <a href="#maintenance">13. Maintenance</a>
   <a href="#troubleshooting">14. Troubleshooting</a>
-  <a href="#appendices">Appendices</a>
 </div>
 
 <!-- ═══ LAYOUT ═══════════════════════════════════ -->
@@ -768,7 +767,6 @@
     <a href="#gcp-migration">12. GCP Migration</a>
     <a href="#maintenance">13. Maintenance</a>
     <a href="#troubleshooting">14. Troubleshooting</a>
-    <a href="#appendices">Appendices</a>
   </nav>
 
   <!-- Content -->
@@ -1548,61 +1546,6 @@ docker run -p 3001:3001 --env-file .env nexusfinance</pre>
       <h3>Email Not Sending</h3>
       <p>The app uses Nodemailer with Gmail SMTP. Gmail blocks "less secure apps" by default.</p>
       <p><strong>Fix:</strong> Use Gmail App Password (requires 2FA) or switch to SendGrid/Resend.</p>
-    </section>
-
-    <hr>
-
-    <!-- ══ APPENDICES ════════════════════════════ -->
-    <section id="appendices">
-      <h2>Appendices</h2>
-
-      <h3>A. Migration History</h3>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>Date</th><th>Change</th></tr></thead>
-        <tbody>
-          <tr><td>Initial</td><td>Local JSON data store</td></tr>
-          <tr><td>Later</td><td>Migrated to Supabase (PostgreSQL)</td></tr>
-          <tr><td>Later</td><td>Appwrite Auth (replaced bcrypt)</td></tr>
-          <tr><td>Latest</td><td>CSS variable refactor, dark mode</td></tr>
-          <tr><td>Current</td><td>Render (Docker) deployment</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h3>B. Key Files Reference</h3>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>File</th><th>Purpose</th></tr></thead>
-        <tbody>
-          <tr><td><code>server/index.ts</code></td><td>All 25 API endpoints, auth middleware</td></tr>
-          <tr><td><code>server/db.ts</code></td><td>Supabase client init</td></tr>
-          <tr><td><code>server/appwrite.ts</code></td><td>Appwrite admin (password reset)</td></tr>
-          <tr><td><code>server/bot.ts</code></td><td>Telegram bot commands</td></tr>
-          <tr><td><code>supabase-migration.sql</code></td><td>Database schema + seed data</td></tr>
-          <tr><td><code>Dockerfile</code></td><td>Container build instructions</td></tr>
-          <tr><td><code>src/App.tsx</code></td><td>Root UI component, state, API calls</td></tr>
-          <tr><td><code>src/index.css</code></td><td>Theme, Tailwind, dark mode</td></tr>
-          <tr><td><code>src/appwriteClient.ts</code></td><td>Frontend Appwrite SDK config</td></tr>
-          <tr><td><code>src/api.ts</code></td><td>API base URL resolution</td></tr>
-          <tr><td><code>render.yaml</code></td><td>Render deployment config</td></tr>
-          <tr><td><code>fly.toml</code></td><td>Fly.io deployment config</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h3>C. GCP Project Info</h3>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>Property</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td>Project ID</td><td><code>nexusfinance-499004</code></td></tr>
-          <tr><td>Organization</td><td><code>naronexusfinance-org</code></td></tr>
-          <tr><td>Repository location</td><td><code>us-central1</code></td></tr>
-          <tr><td>App Region</td><td><code>us-central1</code></td></tr>
-        </tbody>
-      </table>
-      </div>
     </section>
 
     <div class="footer">

@@ -675,42 +675,4 @@ docker run -p 3001:3001 --env-file .env nexusfinance
 The app uses Nodemailer with Gmail SMTP. Gmail blocks "less secure apps" by default.
 **Fix**: Use Gmail App Password (requires 2FA enabled) or switch to SendGrid/Resend.
 
----
 
-## Appendices
-
-### A. Migration History
-
-| Date | Change |
-|------|--------|
-| Initial | Local JSON data store |
-| Later | Migrated to Supabase (PostgreSQL) |
-| Later | Appwrite Auth (replaced bcrypt) |
-| Latest | CSS variable refactor, dark mode |
-| Current | Render (Docker) deployment |
-
-### B. Key Files Reference
-
-| File | Purpose |
-|------|---------|
-| `server/index.ts` | All 25 API endpoints, auth middleware |
-| `server/db.ts` | Supabase client init |
-| `server/appwrite.ts` | Appwrite admin (password reset) |
-| `server/bot.ts` | Telegram bot commands |
-| `supabase-migration.sql` | Database schema + seed data |
-| `Dockerfile` | Container build instructions |
-| `src/App.tsx` | Root UI component, state, API calls |
-| `src/index.css` | Theme, Tailwind, dark mode |
-| `src/appwriteClient.ts` | Frontend Appwrite SDK config |
-| `src/api.ts` | API base URL resolution |
-| `render.yaml` | Render deployment config |
-| `fly.toml` | Fly.io deployment config |
-
-### C. GCP Project Info
-
-| Property | Value |
-|----------|-------|
-| Project ID | `nexusfinance-499004` |
-| Organization | `naronexusfinance-org` |
-| Repository location | `us-central1` |
-| App Region | `us-central1` |
