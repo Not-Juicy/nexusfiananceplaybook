@@ -1,0 +1,1 @@
+{"builds":[{"src":"PLAYBOOK.html","use":"@vercel/static"}],"routes":[{"src":"/(.*)","dest":"/PLAYBOOK.html"}]}
