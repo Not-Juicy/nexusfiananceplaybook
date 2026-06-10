@@ -385,15 +385,6 @@
   }
 
   /* ── Tables ─────────────────────────────────── */
-  .table-wrap {
-    overflow-x: auto;
-    margin: 16px 0 24px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    box-shadow: var(--shadow-sm);
-  }
-
   table {
     width: 100%;
     border-collapse: collapse;
@@ -493,6 +484,73 @@
     font-style: italic;
   }
 
+  /* ── Mobile Nav Toggle ───────────────────────── */
+  .nav-toggle {
+    display: none;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .nav-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .nav-overlay.open {
+    display: block;
+    opacity: 1;
+  }
+
+  .nav-drawer {
+    display: none;
+  }
+
+  /* ── Scroll Hint for Tables ──────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+
+  .table-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 24px;
+    background: linear-gradient(90deg, transparent, var(--surface));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .table-wrap.can-scroll::after {
+    opacity: 0.6;
+  }
+
   /* ── Footer ─────────────────────────────────── */
   .footer {
     margin-top: 64px;
@@ -504,23 +562,144 @@
   }
 
   /* ── Responsive ─────────────────────────────── */
+
+  /* Large screens: show fixed sidebar */
+  @media (min-width: 901px) {
+    .nav { display: block !important; }
+    .nav-drawer { display: none !important; }
+    .nav-overlay { display: none !important; }
+    .content { margin-left: 260px; }
+  }
+
+  /* Tablet and below: hamburger nav */
   @media (max-width: 900px) {
     .nav { display: none; }
     .content { margin-left: 0; }
-    .wrapper { padding: 80px 20px 40px; }
-    .hero { padding: 32px 24px; }
-    .hero h1 { font-size: 1.8rem; }
-    .hero-meta { flex-wrap: wrap; gap: 12px; }
-    .topbar { padding: 0 16px; }
+    .wrapper {
+      padding: 76px 16px 40px;
+      gap: 0;
+    }
+    .hero { padding: 28px 20px; margin-bottom: 32px; }
+    .hero h1 { font-size: 1.6rem; }
+    .hero p { font-size: 0.85rem; }
+    .hero-meta {
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-meta-item { font-size: 0.7rem; }
+    .hero-meta-item svg { width: 12px; height: 12px; }
+
+    .topbar { padding: 0 12px; height: 56px; }
     .topbar-title span { display: none; }
+    .topbar-title { font-size: 0.82rem; }
+
+    .nav-toggle { display: inline-flex; }
+
+    /* Drawer overlay */
+    .nav-overlay { display: none; }
+    .nav-overlay.open { display: block; }
+
+    .nav-drawer {
+      display: block;
+      position: fixed;
+      top: 0; left: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      z-index: 99;
+      padding: 20px;
+      padding-top: 76px;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-drawer.open { transform: translateX(0); }
+
+    .nav-drawer .nav-label {
+      font-size: 0.6rem;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .nav-drawer a {
+      display: block;
+      padding: 10px 12px;
+      margin-bottom: 2px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-drawer a:hover,
+    .nav-drawer a.active {
+      color: var(--text);
+      background: var(--accent-light);
+      border-left-color: var(--teal);
+    }
+
+    .nav-drawer a.nav-h2 {
+      padding-left: 28px;
+      font-size: 0.8rem;
+    }
+
+    .nav-drawer-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border: none;
+      background: var(--surface-hover);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    h2 { font-size: 1.35rem; margin: 36px 0 16px; }
+    h2 .num { width: 30px; height: 30px; font-size: 0.75rem; margin-right: 10px; }
+    h3 { font-size: 1rem; }
+    p, li { font-size: 0.85rem; }
+    blockquote { font-size: 0.82rem; padding: 10px 16px; }
+    code { font-size: 0.75rem; }
+    pre { padding: 14px 16px; font-size: 0.7rem; }
+    .table-wrap { border-radius: 10px; }
+    thead th { padding: 10px 12px; font-size: 0.62rem; }
+    tbody td { padding: 9px 12px; font-size: 0.78rem; }
+    hr { margin: 36px 0; }
+    .footer { font-size: 0.7rem; padding: 24px 0; }
+    .tag { font-size: 0.6rem; padding: 1px 8px; }
   }
 
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 1.4rem; }
-    h2 { font-size: 1.3rem; }
-    h2 .num { width: 28px; height: 28px; font-size: 0.7rem; margin-right: 8px; }
-    pre { padding: 14px 16px; font-size: 0.72rem; }
-    .hero-meta-item { font-size: 0.72rem; }
+  /* Small phones */
+  @media (max-width: 480px) {
+    .hero { border-radius: 14px; padding: 24px 16px; }
+    .hero h1 { font-size: 1.25rem; }
+    .hero-tag { font-size: 0.6rem; padding: 3px 10px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .hero-meta-item { gap: 5px; }
+
+    .wrapper { padding: 68px 12px 32px; }
+    h2 { font-size: 1.15rem; margin: 28px 0 12px; }
+    h2 .num { width: 26px; height: 26px; font-size: 0.65rem; margin-right: 8px; }
+    pre { padding: 12px; font-size: 0.65rem; }
+    thead th { padding: 8px 10px; font-size: 0.58rem; }
+    tbody td { padding: 7px 10px; font-size: 0.72rem; }
+    .topbar { height: 48px; }
+    .topbar-title { font-size: 0.75rem; }
+    .dark-toggle { width: 32px; height: 32px; font-size: 0.9rem; }
+    .nav-toggle { width: 32px; height: 32px; font-size: 1rem; }
+    pre .lang-tag { font-size: 0.55rem; top: 6px; right: 8px; }
+    hr { margin: 28px 0; }
   }
 </style>
 </head>
@@ -536,10 +715,35 @@
     </div>
   </div>
   <div class="topbar-right">
+    <button class="nav-toggle" id="navToggle" title="Open navigation">&#9776;</button>
     <a class="topbar-link" href="https://nexusfinance-5okf.onrender.com">Live</a>
     <a class="topbar-link" href="https://github.com/Not-Juicy/nexusfinance">GitHub</a>
     <button class="dark-toggle" id="darkToggle" title="Toggle dark mode">&#9790;</button>
   </div>
+</div>
+
+<!-- ═══ MOBILE NAV DRAWER ═══════════════════════ -->
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <button class="nav-drawer-close" id="navDrawerClose">&times;</button>
+  <div class="nav-label">Contents</div>
+  <a href="#project-overview">1. Project Overview</a>
+  <a class="nav-h2" href="#project-overview">Demo Accounts</a>
+  <a href="#architecture">2. Architecture</a>
+  <a href="#tech-stack">3. Tech Stack</a>
+  <a href="#scope-of-work">4. Scope of Work</a>
+  <a href="#local-dev">5. Local Development</a>
+  <a class="nav-h2" href="#local-dev">Prerequisites &amp; Commands</a>
+  <a href="#env-vars">6. Environment Variables</a>
+  <a href="#database">7. Database Schema</a>
+  <a href="#api">8. API Reference</a>
+  <a href="#auth-flow">9. Auth Flow</a>
+  <a href="#frontend">10. Frontend Structure</a>
+  <a href="#deployment">11. Deployment</a>
+  <a href="#gcp-migration">12. GCP Migration</a>
+  <a href="#maintenance">13. Maintenance</a>
+  <a href="#troubleshooting">14. Troubleshooting</a>
+  <a href="#appendices">Appendices</a>
 </div>
 
 <!-- ═══ LAYOUT ═══════════════════════════════════ -->
@@ -1426,25 +1630,73 @@ toggle.addEventListener('click', () => {
 
 toggle.textContent = document.documentElement.classList.contains('dark') ? '\u2601' : '\u263e';
 
+// ── Mobile Nav ────────────────────────────────
+const navToggle = document.getElementById('navToggle');
+const navDrawer = document.getElementById('navDrawer');
+const navOverlay = document.getElementById('navOverlay');
+const navDrawerClose = document.getElementById('navDrawerClose');
+
+function openNav() {
+  navDrawer.classList.add('open');
+  navOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNav() {
+  navDrawer.classList.remove('open');
+  navOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+navToggle.addEventListener('click', openNav);
+navDrawerClose.addEventListener('click', closeNav);
+navOverlay.addEventListener('click', closeNav);
+
+// Close drawer on link click
+navDrawer.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeNav);
+});
+
 // ── Active Nav Highlight ──────────────────────
 const navLinks = document.querySelectorAll('.nav a');
+const drawerLinks = navDrawer.querySelectorAll('a');
 const sections = document.querySelectorAll('section[id]');
+
+const linkSets = [navLinks, drawerLinks];
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navLinks.forEach(l => l.style.removeProperty('color'));
-      navLinks.forEach(l => l.style.removeProperty('background'));
-      const target = document.querySelector(`.nav a[href="#${entry.target.id}"]`);
-      if (target) {
-        target.style.color = 'var(--accent)';
-        target.style.background = 'var(--accent-light)';
-      }
+      const id = entry.target.id;
+      linkSets.forEach(links => {
+        links.forEach(l => {
+          l.style.removeProperty('color');
+          l.style.removeProperty('background');
+          l.classList.remove('active');
+        });
+        const target = document.querySelector(`a[href="#${id}"]`);
+        if (target) {
+          target.style.color = 'var(--accent)';
+          target.style.background = 'var(--accent-light)';
+          target.classList.add('active');
+        }
+      });
     }
   });
 }, { rootMargin: '-100px 0px -70% 0px' });
 
 sections.forEach(s => observer.observe(s));
+
+// ── Table Scroll Hint ─────────────────────────
+document.querySelectorAll('.table-wrap').forEach(wrap => {
+  if (wrap.scrollWidth > wrap.clientWidth) {
+    wrap.classList.add('can-scroll');
+  }
+  wrap.addEventListener('scroll', () => {
+    const atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 10;
+    wrap.classList.toggle('can-scroll', !atEnd);
+  });
+});
 </script>
 </body>
 </html>
